@@ -24,6 +24,11 @@ const App = (props) => {
       .catch(err => {
         console.log(err);
       });
+
+      const favorites = localStorage.getItem('Favorites')
+      if(favorites){
+        setFavoriteMovies(JSON.parse(favorites))
+      }
   }, []);
 
   const deleteMovies = (data)=> {
@@ -31,10 +36,11 @@ const App = (props) => {
   }
 
   const addToFavorites = (movie) => {
-    if(favoriteMovies.includes(movie)){
+    if(favoriteMovies.find(m => m === movie)){
       alert(`This movie is already a favorite movie!`)
     } else {
       setFavoriteMovies([...favoriteMovies, movie])
+      localStorage.setItem('Favorites', JSON.stringify([...favoriteMovies, movie]))
     }
     
   }
